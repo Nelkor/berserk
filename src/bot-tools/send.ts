@@ -1,16 +1,17 @@
-import { CommandContext } from 'grammy'
+import { Context } from 'grammy'
 
-import { BerserkContext } from './types'
+import { ReplyExtra } from './types'
 
-export const sendTextWithPicture = (
-  ctx: CommandContext<BerserkContext>,
+export const reply = (
+  ctx: Context,
   caption: string,
-  picture?: string
+  reply_to_message_id?: number,
+  { picture, keyboard }: ReplyExtra = {}
 ) => {
   const options = {
-    reply_to_message_id:
-      ctx.chat.type === 'group' ? ctx.msg.message_id : undefined,
+    reply_to_message_id,
     parse_mode: 'HTML' as const,
+    reply_markup: keyboard,
   }
 
   if (picture) {
