@@ -6,6 +6,6 @@ export * from './launcher'
 
 export * from './spam-control'
 
-export * from './send'
+export * from './reply'
 
 export type { Berserk } from './types'

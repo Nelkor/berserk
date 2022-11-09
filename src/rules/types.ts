@@ -1,3 +1,5 @@
+import { InlineKeyboard } from 'grammy'
+
 interface RawRulesItem {
   code: string
   text: string
@@ -14,4 +16,10 @@ export interface RulesItem extends RawRulesItem {
   preparedText: string
   preparedCode: string
   title: string
+}
+
+export interface RulesAnswer {
+  text: string
+  picture?: string
+  keyboard?: InlineKeyboard
 }
