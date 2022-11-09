@@ -11,4 +11,5 @@ export type Berserk = Bot<BerserkContext>
 export interface ReplyExtra {
   picture?: string
   keyboard?: InlineKeyboard
+  forceReply?: boolean
 }

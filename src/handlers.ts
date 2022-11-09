@@ -1,11 +1,30 @@
 import { reply, Berserk } from '@/bot-tools'
 import { getRuleByCode, getAnswer, formatRule } from '@/rules'
-import { NOT_YOUR_BUTTON, HOT_TO_SEARCH } from '@/messages'
 import { prepareSearch } from '@/helpers'
+import {
+  NOT_YOUR_BUTTON,
+  HOT_TO_SEARCH,
+  GREETINGS,
+  HOW_TO_REPORT,
+  PRIVATE_ONLY,
+  HELP,
+} from '@/messages'
 
 export const setHandlers = (bot: Berserk) => {
   bot.chatType('private').command('start', ctx => {
-    ctx.reply('Okay').then()
+    ctx.reply(GREETINGS).then()
+  })
+
+  bot.chatType('private').command('help', ctx => {
+    ctx.reply(HELP, { parse_mode: 'HTML' }).then()
+  })
+
+  bot.chatType('private').command('report', ctx => {
+    ctx.reply(HOW_TO_REPORT).then()
+  })
+
+  bot.chatType('group').command(['help', 'report'], ctx => {
+    ctx.reply(PRIVATE_ONLY, { reply_to_message_id: ctx.msg.message_id }).then()
   })
 
   bot.on('message').command(['r', 'rule', 'rules'], ctx => {
@@ -13,7 +32,7 @@ export const setHandlers = (bot: Berserk) => {
       ctx.chat.type === 'group' ? ctx.msg.message_id : undefined
 
     if (!ctx.match) {
-      reply(ctx, HOT_TO_SEARCH, replyToMessage)
+      reply(ctx, HOT_TO_SEARCH, replyToMessage, { forceReply: true })
 
       return
     }

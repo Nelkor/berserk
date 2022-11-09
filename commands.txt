@@ -1,2 +1,3 @@
-lang - Language management
-start - Say hello
+help - Инструкция
+rules - Поиск пунктов правил
+report - Сообщить что угодно
