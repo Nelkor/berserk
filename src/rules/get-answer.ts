@@ -1,6 +1,7 @@
 import { InlineKeyboard } from 'grammy'
 
 import { MAX_PATTERN_LENGTH, splitArray } from '@/helpers'
+import { TOO_SHORT, NOT_FOUND, TOO_COMMON, SELECT_VARIANT } from '@/messages'
 
 import { formatRule } from './format-rule'
 import { searchRules } from './search-rules'
@@ -12,22 +13,22 @@ export const getAnswer = (
   messageId: number
 ): RulesAnswer => {
   if (search.length < 3) {
-    return { text: 'Хотя бы три буквы' }
+    return { text: TOO_SHORT }
   }
 
   const rules = searchRules(search)
 
   if (!rules.length) {
-    return { text: 'К сожалению, я не смог найти такой пункт правил' }
+    return { text: NOT_FOUND }
   }
 
   if (rules.length > MAX_PATTERN_LENGTH) {
-    return { text: 'Похоже, что это слишком общая фраза' }
+    return { text: TOO_COMMON }
   }
 
   return rules.length > 1
     ? {
-        text: 'Эта фраза встречается в нескольких пунктах',
+        text: SELECT_VARIANT,
         keyboard: new InlineKeyboard(
           splitArray(
             rules.map(({ code }) => ({
