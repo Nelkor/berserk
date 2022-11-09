@@ -2,6 +2,7 @@ import { InlineKeyboard } from 'grammy'
 
 import { sendTextWithPicture, Berserk } from '@/bot-tools'
 import { searchRules, getRuleByCode } from '@/rules'
+import { splitArray, MAX_PATTERN_LENGTH } from '@/helpers'
 
 export const setHandlers = (bot: Berserk) => {
   bot.chatType('private').command('start', ctx => {
@@ -26,7 +27,7 @@ export const setHandlers = (bot: Berserk) => {
       return
     }
 
-    if (foundRules.length > 10) {
+    if (foundRules.length > MAX_PATTERN_LENGTH) {
       sendTextWithPicture(ctx, 'Похоже, что это слишком общая фраза')
 
       return
@@ -46,7 +47,7 @@ export const setHandlers = (bot: Berserk) => {
       callback_data: `${code}/${ctx.from.id}/${ctx.msg.message_id}`,
     }))
 
-    const keyboard = new InlineKeyboard([buttons])
+    const keyboard = new InlineKeyboard(splitArray(buttons))
 
     ctx
       .reply('Эта фраза встречается в нескольких пунктах', {
