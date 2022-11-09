@@ -30,6 +30,10 @@ export default {
           presets: ['@babel/preset-typescript'],
         },
       },
+      {
+        test: /\.jpg$/,
+        type: 'asset',
+      },
     ],
   },
   plugins: [

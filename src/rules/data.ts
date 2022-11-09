@@ -1,4 +1,5 @@
 import { prepareText } from '@/helpers'
+import table106_1_1 from '@/images/table-106-1-1.jpg'
 
 import { RawRulesChapter, RulesItem } from './types'
 
@@ -104,7 +105,7 @@ const rawRules: RawRulesChapter[] = [
       {
         code: '106.1.1',
         text: 'Соответствие между типом карты и присущими ему базовыми свойствами приведено в таблице.',
-        picture: 'https://grammy.dev/Y.png',
+        picture: table106_1_1,
         keywords: [
           'стоимость карты',
           'количество жизней',

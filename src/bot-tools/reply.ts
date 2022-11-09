@@ -1,4 +1,4 @@
-import { Context } from 'grammy'
+import { Context, InputFile } from 'grammy'
 
 import { ReplyExtra } from './types'
 
@@ -16,7 +16,7 @@ export const reply = (
 
   if (picture) {
     ctx
-      .replyWithPhoto(picture, {
+      .replyWithPhoto(new InputFile(picture), {
         caption,
         ...options,
       })
