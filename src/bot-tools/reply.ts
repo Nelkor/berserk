@@ -11,6 +11,7 @@ export const reply = (
   const options = {
     reply_to_message_id,
     parse_mode: 'HTML' as const,
+    disable_web_page_preview: true,
     reply_markup: forceReply ? { force_reply: true as const } : keyboard,
   }
 

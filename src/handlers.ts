@@ -16,20 +16,24 @@ export const setHandlers = (bot: Berserk) => {
   })
 
   bot.chatType('private').command('help', ctx => {
-    ctx.reply(HELP, { parse_mode: 'HTML' }).then()
+    ctx
+      .reply(HELP, { parse_mode: 'HTML', disable_web_page_preview: true })
+      .then()
   })
 
   bot.chatType('private').command('report', ctx => {
     ctx.reply(HOW_TO_REPORT).then()
   })
 
-  bot.chatType('group').command(['help', 'report'], ctx => {
+  bot.chatType(['group', 'supergroup']).command(['help', 'report'], ctx => {
     ctx.reply(PRIVATE_ONLY, { reply_to_message_id: ctx.msg.message_id }).then()
   })
 
   bot.on('message').command(['r', 'rule', 'rules'], ctx => {
     const replyToMessage =
-      ctx.chat.type === 'group' ? ctx.msg.message_id : undefined
+      ctx.chat.type === 'group' || ctx.chat.type === 'supergroup'
+        ? ctx.msg.message_id
+        : undefined
 
     if (!ctx.match) {
       reply(ctx, HOT_TO_SEARCH, replyToMessage, { forceReply: true })
