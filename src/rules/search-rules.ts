@@ -5,7 +5,7 @@ export const searchRules = (str: string) =>
     item =>
       item.preparedText.includes(str) ||
       item.preparedCode === str ||
-      item.keywords.some(word => word.includes(str))
+      item.keywords?.some(word => word.includes(str))
   )
 
 export const getRuleByCode = (code: string) =>

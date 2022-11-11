@@ -3,7 +3,7 @@ import { InlineKeyboard } from 'grammy'
 interface RawRulesItem {
   code: string
   text: string
-  keywords: string[]
+  keywords?: string[]
   picture?: string
 }
 
