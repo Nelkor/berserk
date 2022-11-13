@@ -36,7 +36,7 @@ export const setHandlers = (bot: Berserk) => {
         : undefined
 
     if (!ctx.match) {
-      reply(ctx, HOT_TO_SEARCH, replyToMessage, { forceReply: true })
+      reply(ctx, HOT_TO_SEARCH, replyToMessage)
 
       return
     }
