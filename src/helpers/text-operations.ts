@@ -16,3 +16,5 @@ export const prepareSearch = (str: string) =>
     .replace(spaces, ' ')
     // latin "Ex" to cyrillic "H"
     .replaceAll('x', 'х')
+    // latin "Y" to cyrillic "Oo"
+    .replaceAll('y', 'у')
