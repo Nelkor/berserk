@@ -2,8 +2,9 @@ import { reply, Berserk } from '@/bot-tools'
 import { getRuleByCode, getAnswer, formatRule } from '@/rules'
 import { prepareSearch } from '@/helpers'
 import {
-  NOT_YOUR_BUTTON,
-  HOT_TO_SEARCH,
+  NOT_YOUR_BUTTONS,
+  TOO_OLD_BUTTONS,
+  HOW_TO_SEARCH,
   GREETINGS,
   HOW_TO_REPORT,
   PRIVATE_ONLY,
@@ -36,7 +37,7 @@ export const setHandlers = (bot: Berserk) => {
         : undefined
 
     if (!ctx.match) {
-      reply(ctx, HOT_TO_SEARCH, replyToMessage)
+      reply(ctx, HOW_TO_SEARCH, replyToMessage)
 
       return
     }
@@ -50,18 +51,25 @@ export const setHandlers = (bot: Berserk) => {
     reply(ctx, text, replyToMessage, { picture, keyboard })
   })
 
-  bot.on('callback_query:data', ctx => {
+  bot.on('callback_query:data', async ctx => {
     const [code, userIdStr, messageIdStr] = ctx.callbackQuery.data.split('/')
     const userId = parseInt(userIdStr)
     const messageId = parseInt(messageIdStr)
 
     if (ctx.from.id != userId) {
-      ctx.answerCallbackQuery({ text: NOT_YOUR_BUTTON }).then()
+      ctx.answerCallbackQuery({ text: NOT_YOUR_BUTTONS }).then()
 
       return
     }
 
-    ctx.deleteMessage().then()
+    try {
+      await ctx.deleteMessage()
+    } catch (e) {
+      ctx.answerCallbackQuery({ text: TOO_OLD_BUTTONS }).then()
+
+      return
+    }
+
     ctx.answerCallbackQuery().then()
 
     const rule = getRuleByCode(code)
